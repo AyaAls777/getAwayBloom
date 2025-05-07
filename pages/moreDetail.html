@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- MDL library-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+    <!-- primary and accent colors-->
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.amber-indigo.min.css" />
+
+    <!--Services code library-->
+    <script src='https://eng1003.monash/libs/services.js'></script>
+
+    <!--MapBox code library-->
+    <style type="text/css">
+        #map {
+            width: 100%;
+            height: 25vh;
+            outline-style: solid;
+        }
+    </style>
+
+    <!-- styling for the table -->
+    <style>
+        table {
+            width: 100%;
+            border: 2px solid black
+        }
+
+        tbody {
+            display: block;
+            width: 100%;
+            height: 180px;
+            overflow: auto;
+        }
+    </style>
+
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.css' rel='stylesheet'>
+
+    <!--OpenCage Geocoding API code library-->
+    <script src='https://api.opencagedata.com/geocode/v1/json?q=LAT+LNG&key=KEY&jsonp=FUNCTION'></script>
+    <script src='https://api.opencagedata.com/geocode/v1/json?q=PLACENAME&key=KEY&jsonp=FUNCTION'></script>
+
+    <!--Add favicon to html page-->
+    <link rel="icon" href="img/Favicon2.png" type="image/gif" sizes="100x100">
+
+
+</head>
+
+<body>
+
+    <!-- Always shows a header, even in smaller screens. -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <!-- Title -->
+                <span class="mdl-layout-title"><img src="img/logo3.png" width="120" height="100"></span>
+                <!-- Add spacer, to align navigation to the right -->
+                <div class="mdl-layout-spacer"></div>
+                <!-- Navigation. We hide it in small screens. -->
+                <nav class="mdl-navigation mdl-layout--large-screen-only">
+                    <a class="mdl-navigation__link" href="index.html">Home</a>
+                    <a class="mdl-navigation__link" href="listOfPlans.html">List of Plans</a>
+                </nav>
+            </div>
+        </header>
+        <!--drawer-->
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title" style="background-color:#FFBF00">GetawayBloom</span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="index.html"><img src="img/homeIcon.png" width="25" height="25">
+                    Home</a>
+                <a class="mdl-navigation__link" href="listOfPlans.html"><img src="img/listIcon.png" width="25"
+                        height="25"> List of Plans</a>
+            </nav>
+        </div>
+        <main class="mdl-layout__content">
+            <div class="page-content">
+                <!--content-->
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--1-col"></div>
+                    <div class="mdl-cell mdl-cell--6-col">
+
+                        <h3 id="vacationName">Hong Kong</h3>
+                        <!--Vacation Name-->
+                        <h4 id="vacationDate">(02/09/2021)</h4>
+                        <!--date-->
+
+                        <input type="button" value="My Starting" onclick="myStarting()">
+                        <input type="button" value="Show Path" onclick="showPath()">
+                        <input type="button" value="Clear Path" onclick="clearPath()">
+                        <div id="map"></div>
+                        <br>
+                        <!--start of demo table-->
+                        <p id="numOfStop"><b>Total number of stops</b>: 5</p>
+
+                        <div>
+                            <!-- from mdl for table but have problems with the width -->
+                            <!-- class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" -->
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <!-- from mdl for table contents to look nice but got prob -->
+                                        <!-- class="mdl-data-table__cell--non-numeric" -->
+                                        <th>Details</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody id="listOfPlanscontainer">
+                                    <!--start of demo table-->
+                                    <tr>
+                                        <!-- <td class="mdl-data-table__cell--non-numeric" > -->
+                                        <td>
+                                            <!--Vacation Name-->
+                                            <p><b>Starting Location:</b><br>12a, Lorong Batu Nilam 3b, Bandar Bukit
+                                                Tinggi,
+                                                Klang, Selangor</p>
+                                            <p><b>POI Order: 1</b></p>
+                                            <p><b>Name:</b>Mamak</p>
+                                            <p><b>Category:</b> Restaurant</p>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <!-- <td class="mdl-data-table__cell--non-numeric" > -->
+                                        <td>
+                                            <!--Vacation Name-->
+                                            <p><b>Starting Location:</b><br>12a, Lorong Batu Nilam 3b, Bandar Bukit
+                                                Tinggi,
+                                                Klang, Selangor</p>
+                                            <p><b>POI Order: 2</b></p>
+                                            <p><b>Name:</b>Shell Station</p>
+                                            <p><b>Category:</b> Gas Station</p>
+                                        </td>
+                                        <td>
+                                            <p><b>Distance:</b><br>50km</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <!-- <td class="mdl-data-table__cell--non-numeric" > -->
+                                        <td>
+                                            <!--Vacation Name-->
+                                            <p><b>Starting Location:</b><br>12a, Lorong Batu Nilam 3b, Bandar Bukit
+                                                Tinggi,
+                                                Klang, Selangor</p>
+                                            <p><b>POI Order: 3</b></p>
+                                            <p><b>Name:</b>Hotel Pheonix</p>
+                                            <p><b>Category:</b>Accomodation</p>
+                                        </td>
+                                        <td>
+                                            <p><b>Distance:</b><br>15km</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <!-- <td class="mdl-data-table__cell--non-numeric" > -->
+                                        <td>
+                                            <!--Vacation Name-->
+                                            <p><b>Starting Location:</b><br>12a, Lorong Batu Nilam 3b, Bandar Bukit
+                                                Tinggi,
+                                                Klang, Selangor</p>
+                                            <p><b>POI Order: 4</b></p>
+                                            <p><b>Name:</b>Funfair Charles</p>
+                                            <p><b>Category:</b>Attraction</p>
+                                        </td>
+                                        <td>
+                                            <p><b>Distance:</b><br>5km</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p><b>Total Distance:</b><br>70km</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <br>
+
+                        <!--back button to go back to listOfPlans page-->
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect
+                            mdl-button--accent" onclick="backToListOfPlan()"><img src="img/back.png" width="25"
+                                height="25">
+                        </button>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+    </div>
+    <script src="js/shared.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/moreDetail.js"></script>
+
+</body>
+
+</html>
